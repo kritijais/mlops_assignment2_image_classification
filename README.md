@@ -221,6 +221,21 @@ data/processed_split/
 
 ---
 
+### End-to-End Data Preparation Flow
+
+```bash
+# Download raw data
+python -m src.data.data_download
+
+# Preprocess raw images
+python -m src.data.preprocess
+
+# Create train / val / test split
+python -m src.data.train_val_test_split
+```
+
+---
+
 ### Data Versioning with DVC
 
 After downloading the dataset, the raw data should be tracked using **DVC**:
@@ -241,22 +256,6 @@ dvc add data/raw
 dvc add data/processed
 dvc add data/processed_split
 ```
-
----
-
-### End-to-End Data Preparation Flow
-
-```bash
-# Download raw data
-python -m src.data.data_download
-
-# Preprocess raw images
-python -m src.data.preprocess
-
-# Create train / val / test split
-python -m src.data.train_val_test_split
-```
-
 
 ---
 
@@ -303,7 +302,6 @@ mlflow ui
 After generating the .pkl file, it should be tracked using **DVC**:
 
 ```bash
-dvc init
 dvc add artifacts/cnn_model.pkl
 ```
 
@@ -317,6 +315,20 @@ dvc add artifacts/cnn_model.pkl
   * `GET /health`
   * `POST /predict`
   * `GET /metrics`
+
+
+### Run the API Locally
+
+From project root:
+```bash
+uvicorn src.api.app:app --reload
+```
+
+Open:
+
+http://127.0.0.1:8000/docs
+
+
 
 ### Example Prediction:
 
