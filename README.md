@@ -462,4 +462,5 @@ python -m src.utils.post_deploy_collector
 ```
 
 This will send test images to the `/predict` endpoint and log the results.
+
 ---
