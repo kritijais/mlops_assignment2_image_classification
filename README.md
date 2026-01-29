@@ -300,13 +300,14 @@ mlflow ui
 
 ### Model Versioning with DVC
 
-After generating the .pkl file, it should be tracked using **DVC**:
+After generating the `.pkl` file, it should be tracked using **DVC`:
 
 ```bash
 dvc add artifacts/cnn_model.pkl
 ```
 
 ---
+
 
 ## Inference Service
 
@@ -400,10 +401,16 @@ http://localhost:8000
 
 ## Post-Deploy Smoke Tests
 
-Automated smoke tests validate:
+Automated smoke tests are run as part of the CD pipeline after deployment. These tests validate:
 
 * `/health` endpoint
 * `/predict` endpoint with a real image
+
+To run smoke tests manually:
+```bash
+chmod +x scripts/smoke_test.sh
+./scripts/smoke_test.sh
+```
 
 If any check fails, **the CD pipeline fails automatically**.
 
@@ -424,4 +431,14 @@ If any check fails, **the CD pipeline fails automatically**.
 * Stored in append-only JSONL
 * Enables post-deployment accuracy evaluation
 
+### Post-Deployment Performance Tracking
+
+To evaluate model performance post-deployment:
+
+1. Ensure the FastAPI service is running (`uvicorn src.api.app:app --reload`)
+2. Run the post-deployment collector:
+   ```bash
+   python -m src.utils.post_deploy_collector
+   ```
+This will send test images to the `/predict` endpoint and log the results.
 ---

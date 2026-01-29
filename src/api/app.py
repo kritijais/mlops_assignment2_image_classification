@@ -6,7 +6,7 @@ import io
 import time
 
 from src.model.inference import load_model, predict_image
-from src.utils.monitoring import record_request, REQUEST_COUNT, TOTAL_LATENCY
+from src.utils.monitoring import record_request
 
 
 MODEL_PATH = "artifacts/cnn_model.pkl"
