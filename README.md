@@ -423,6 +423,26 @@ If any check fails, **the CD pipeline fails automatically**.
 * Structured logs (no images or sensitive data)
 * `/metrics` endpoint for inspection
 
+### Prometheus Monitoring
+
+* Prometheus is configured to scrape metrics from the `/metrics` endpoint
+* Metrics include request count, latency, and other performance indicators
+* Prometheus is run as a separate service in the Docker Compose configuration
+
+To access Prometheus:
+1. Ensure Docker Compose is running (`docker compose up -d`)
+2. Open Grafana at http://localhost:9090
+
+### Grafana Dashboards
+
+* Grafana is used to visualize metrics collected by Prometheus
+* Dashboards provide insights into API performance and health
+* Grafana is configured with a provisioning file for datasources and dashboards
+
+To access Grafana:
+1. Ensure Docker Compose is running (`docker compose up -d`)
+2. Open Grafana at http://localhost:3000
+
 ---
 
 ## Post-Deployment Performance Tracking
@@ -437,8 +457,9 @@ To evaluate model performance post-deployment:
 
 1. Ensure the FastAPI service is running (`uvicorn src.api.app:app --reload`)
 2. Run the post-deployment collector:
-   ```bash
-   python -m src.utils.post_deploy_collector
-   ```
+```bash
+python -m src.utils.post_deploy_collector
+```
+
 This will send test images to the `/predict` endpoint and log the results.
 ---
